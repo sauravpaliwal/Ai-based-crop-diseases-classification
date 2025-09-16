@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌿 Crop Disease Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌿 Crop Disease Detector</h1>
+            <p>An AI-powered tool to help you identify crop diseases from leaf images.</p>
+        </header>
+
+        <main>
+            <form action="/predict" method="post" enctype="multipart/form-data" class="upload-form">
+                
+                <label for="file-upload" class="custom-file-upload">
+                    Choose Image
+                </label>
+                <input id="file-upload" type="file" name="file" accept="image/*" required>
+                <span id="file-name" class="file-name">No file selected</span>
+
+                <button type="submit">Detect Disease</button>
+            </form>
+
+            {% if prediction %}
+                <div class="result animated">
+                    <h2>Prediction Result</h2>
+                    <p class="prediction-text">{{ prediction }}</p>
+                </div>
+            {% endif %}
+        </main>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file-upload');
+        const fileNameSpan = document.getElementById('file-name');
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                fileNameSpan.textContent = fileInput.files[0].name;
+            } else {
+                fileNameSpan.textContent = 'No file selected';
+            }
+        });
+    </script>
+</body>
+</html>
